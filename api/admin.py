@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from .models.users import MyUser
-from .models.titles import Title
 from .models.categories import Category
 from .models.comments import Comments
 from .models.genres import Genre
 from .models.review import Review
+from .models.titles import Title
+from .models.users import MyUser
 
 
 class MyUserAdmin(admin.ModelAdmin):

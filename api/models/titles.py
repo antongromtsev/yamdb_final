@@ -1,10 +1,10 @@
 from datetime import datetime
 
-from django.db import models
-from .genres import Genre
-from .categories import Category
-
 from django.core.validators import MaxValueValidator
+from django.db import models
+
+from .categories import Category
+from .genres import Genre
 
 
 class Title(models.Model):

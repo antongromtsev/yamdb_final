@@ -4,10 +4,10 @@ from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import SAFE_METHODS
 
-from ..models.titles import Title
-from ..serializers.titles import TitleSerializer, TitleListSerializer
-from ..permissions import IsAdminOrReadOnly
 from ..filters.filters import TitlesFilter
+from ..models.titles import Title
+from ..permissions import IsAdminOrReadOnly
+from ..serializers.titles import TitleListSerializer, TitleSerializer
 
 
 class TitleViewSet(viewsets.ModelViewSet):

@@ -2,8 +2,8 @@ from rest_framework import filters
 from rest_framework.pagination import PageNumberPagination
 
 from ..models.genres import Genre
-from ..serializers.genres import GenreSerializer
 from ..permissions import IsAdminOrReadOnly
+from ..serializers.genres import GenreSerializer
 from .categories import MixinViewSet
 
 

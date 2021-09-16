@@ -1,24 +1,20 @@
-from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.viewsets import ModelViewSet
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.decorators import api_view, action
-from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import AccessToken
-from django.shortcuts import get_object_or_404
-from django.core.mail import send_mail
-from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import get_user_model
-
-from ..permissions import IsAdmin
-from ..serializers.users import (
-    MyUserSerializer,
-    UserRegistrationSerializer,
-    EmailSerializer,
-)
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import status
+from rest_framework.decorators import action, api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
+from rest_framework_simplejwt.tokens import AccessToken
 
 from api_yamdb.settings import EMAIL_HOST_USER
 
+from ..permissions import IsAdmin
+from ..serializers.users import (EmailSerializer, MyUserSerializer,
+                                 UserRegistrationSerializer)
 
 User = get_user_model()
 

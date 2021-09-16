@@ -1,10 +1,10 @@
 from rest_framework import filters
 from rest_framework.pagination import PageNumberPagination
 
-from .base import MixinViewSet
 from ..models.categories import Category
-from ..serializers.categories import CategorySerializer
 from ..permissions import IsAdminOrReadOnly
+from ..serializers.categories import CategorySerializer
+from .base import MixinViewSet
 
 
 class CategoryViewSet(MixinViewSet):

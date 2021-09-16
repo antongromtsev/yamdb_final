@@ -1,11 +1,12 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from .views.reviews import ReviewsViewSet
-from .views.comments import CommentsViewSet
-from .views.users import MyUserViewSet, registrations_request, get_token
-from .views.genres import GenreViewSet
+
 from .views.categories import CategoryViewSet
+from .views.comments import CommentsViewSet
+from .views.genres import GenreViewSet
+from .views.reviews import ReviewsViewSet
 from .views.titles import TitleViewSet
+from .views.users import MyUserViewSet, get_token, registrations_request
 
 router = DefaultRouter()
 router.register(r'titles/(?P<title_id>[^/.]+)/reviews', ReviewsViewSet,
