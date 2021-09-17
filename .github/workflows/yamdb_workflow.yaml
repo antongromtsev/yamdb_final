@@ -64,7 +64,8 @@ jobs:
           sudo docker-compose stop
           sudo docker-compose rm web
           # Создаст файл для переменных окружения
-          touch .env 
+          touch .env
+          echo -n > ./.env
           # Наполнит файл переменными окружения из секретов GitHub
           echo EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_HOST_PASSWORD }} >> .env
           echo EMAIL_HOST_USER=${{ secrets.EMAIL_HOST_USER }} >> .env
