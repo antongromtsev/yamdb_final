@@ -1,5 +1,6 @@
 ![example workflow](https://github.com/antongromtsev/yamdb_final/actions/workflows/main.yml/badge.svg)
-# YaMDb_final
+
+# YaMDb_finalgi
 
 Проект представляет собой REST API для сервиса YAMDb - база данных отзывов о фильмах, книгах, музыке и многом другом. Документация по работе с API после развертывания и настройки проекта будет доступна по адресу: http://127.0.0.1/redoc
 
