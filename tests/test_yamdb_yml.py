@@ -16,7 +16,7 @@ class TestWorkflow:
         assert (
             re.search(r'on:\s*push:\s*branches:\s*-\smaster', yamdb) or
             'on: [push]' in yamdb or
-            'on: push' in yamdb 
+            'on:\n  push:' in yamdb 
         ), 'Проверьте, что добавили действие при пуше в файл yamdb_workflow.yaml' 
         assert 'pytest' in yamdb, 'Проверьте, что добавили pytest в файл yamdb_workflow.yaml'
         assert 'appleboy/ssh-action' in yamdb, 'Проверьте, что добавили деплой в файл yamdb_workflow.yaml'
