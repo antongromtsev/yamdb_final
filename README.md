@@ -1,78 +1,71 @@
 ![yamdb_workflow.yaml](https://github.com/antongromtsev/yamdb_final/actions/workflows/yamdb_workflow.yaml/badge.svg)
-
-# YaMDb_finalgi
-
+# YaMDb_final
 Проект представляет собой REST API для сервиса YAMDb - база данных отзывов о фильмах, книгах, музыке и многом другом. Документация по работе с API после развертывания и настройки проекта будет доступна по адресу: http://127.0.0.1/redoc
-
 ## Перед запуском проекта
-
-Инструкции помогут вам развернуть и запустить копию проекта на вашем локальном компьютере для целей разработки и тестирования. Примечания о том, как развернуть проект в действующей системе, см. в разделе "Развертывание проекта".
-
+Инструкции помогут вам развернуть и запустить копию проекта на вашем сервер для целей разработки и тестирования. Примечания о том, как развернуть проект в действующей системе, см. в разделе "Развертывание проекта".
 ### Необходимое окружение
-
-Чтобы запустить проект, вам необходимо установить Docker. Загрузите эту программу с официального [веб-сайта](https://www.docker.com/)
-
-
-
-Утсановите Docker на свой копьютер, следуя инструкции по утановке для Window и MacOS.
+Чтобы запустить проект, вам необходимо на серверной машине установить Docker (docker.io, docker-compose). Загрузите эту программу с официального [веб-сайта](https://www.docker.com/)
 Инструкция по утановке [Docker Linux](https://docs.docker.com/engine/install/ubuntu/)
 
-
 ## Развёртывание проекта
-
 1. Клонировать репозиторий на локальный компьютер с [github](https://github.com/): 
 ```bash
-git clone https://github.com/antongromtsev/infra_sp2.git
+git clone https://github.com/antongromtsev/yamdb_final.git
 ```
-2. Перейти в домашнюю директорию проекта: 
+2. На сайте github.com в директории проекта перейдите на вкладку "Settings"
+3. Выберите вкладку "Secrets"
+4. Добавьте переменные среды:
+    1. Доступ к Docker Hub:
+        * DOCKER_USER - имя пользователя
+        * DOCKER_PASSWORD - пароль
+    2. Доступ на сервер, где будет развернут проект:
+        * HOST - адрес сервера
+        * USER - имя пользователя
+        * SERVER_SSH_KEY - ключ для доступа по ssh
+        * PASSPHRASE - секретное слово (необходимо указать, если используется)
+        * Ключ-ssh находиться в папке пользователя в файле .ssh/id_rsa *
+    3. Доступ к почтовому ящику, для отправки ключей для регистрации
+        * EMAIL_HOST_USER - адрес почты
+        * EMAIL_HOST_PASSWORD -  пароль для приложения
+        *Проект настроен для работу с почтой google. Укажите email от почты google.*
+        *Для отправки сообщений в акаунте google необходиомо [создать пароль для приложения](https://support.google.com/accounts/answer/185833?hl=ru).*
+    4. Переменные окружения для конфигурации БД:
+        * DB_NAME=postgres - имя базы данных
+        * POSTGRES_USER=xxxxxx - логин для подключения к базе данных (установите свой)
+        * POSTGRES_PASSWORD=xxxxxxx - пароль для подключения к БД (установите свой)
+        * DB_HOST=db - название сервиса (контейнера)
+        * DB_PORT=5432 - порт для подключения к БД
+5. Скопируйте папку "nginx" с файлами конфигурации и файл с инструкция ми для docker-compose "docker-compose.yaml" на сервер.
+*для этого можно воспользоваться командой [scp](https://losst.ru/kopirovanie-fajlov-scp)*
+4. Сделайте push на github.
 ```bash
-cd infra_sp2
-```
-3. Создать файл .env и заполнить его:
-```bash
-    EMAIL_HOST_USER=xxxxxx@gmail.com
-    EMAIL_HOST_PASSWORD=xxxxxxxx
-```
-Проект настроен для работу с почтой google. Укажите email от почты google.
-Для отправки сообщений в акаунте google необходиомо [создать пароль для приложения](https://support.google.com/accounts/answer/185833?hl=ru).
-
-```bash
-    DB_NAME=postgres # имя базы данных
-    POSTGRES_USER=xxxxxx # логин для подключения к базе данных
-    POSTGRES_PASSWORD=xxxxxxx # пароль для подключения к БД (установите свой)
-    DB_HOST=db # название сервиса (контейнера)
-    DB_PORT=5432 # порт для подключения к БД
-```
-
-4. Собрать образ и запустить проект:
-```bash
-docker-compose up
-```
-Остановить проект
-```bash
-docker-compose down
-```
+git push
+```  
+После push проекта на github будет запущено:
+    * Проверка на соответствие PEP8
+    * Запуск тестов
+    * Создание образа и отправка его на сервер Docker Hub
+    * Загрузка образа на сервер и развертывание и запуск
 ## Настройка проекта
-
-1. Открыть доплнительную консоль, перейти в деректорию проекта и выполнить миграции:
+1. Откройте консоль, перейти в директорию проекта и выполнить миграции:
 ```bash
-docker exec -it infra_sp2_web_1 python manage.py migrate
+docker exec -it <имя_пользователя>_web_1 python manage.py migrate
 ```
-2. Создать супер пользователя:
+2. Создайте супер пользователя:
 ```bash
-docker exec -it infra_sp2_web_1 python manage.py createsuperuser
-```
-Следуюйте инструкции в консоли.
-3. Собрать статикку:
-```bash
-docker exec -it infra_sp2_web_1 python manage.py collectstatic
+docker exec -it <имя_пользователя>_web_1 python manage.py createsuperuser
 ```
 Следуйте инструкции в консоли.
-
+3. Соберите статику:
+```bash
+docker exec -it <имя_пользователя>_web_1 python manage.py collectstatic
+```
+Следуйте инструкции в консоли.
 4. При необходимости БД можно заполнить тестовыми данными
 ```bash
-docker exec -it infra_sp2_web_1 python manage.py loaddata fixtures.json
+docker exec -it <имя_пользователя>_web_1 python manage.py loaddata fixtures.json
 ```
-После завершения настройки проект будет запущен и доступен по адресу: http://127.0.0.1/redoc.
-
-Образ на Docker Hub находиться по адресу: https://hub.docker.com/repository/docker/fenix217grom/yamdb
+*Предварительно необходимо скопировать файл "fixtures.json" на сервер*
+После завершения настройки проект будет запущен и доступен по адресу: http://<HOST>/redoc.
+Образ на Docker Hub находиться по адресу: https://hub.docker.com/repository/docker/fenix217grom/yamdb_final
+Проект доступен по адресу: http://84.201.136.198
